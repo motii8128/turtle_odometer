@@ -1,0 +1,11 @@
+<launch>
+    <arg name="ekf_param_path" default="$(find-pkg-share launch_example)/config/ekf.yaml" />
+
+    <node pkg="ekf_example" exec="ekf_example">
+        <remap from="/imu" to="/imu_data" />
+        <remap from="/pub_pose" to="filtered_pose"/>
+        <param from="$(var ekf_param_path)" />
+    </node>
+
+    <node pkg="pose_to_tf" exec="pose_to_tf"></node>
+</launch>
