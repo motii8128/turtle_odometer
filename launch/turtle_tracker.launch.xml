@@ -1,4 +1,6 @@
-<launch>   
+<launch>
+    <include file="$(find-pkg-share turtle_odometer)/launch/test.launch.xml"/>
+
     <node pkg="joy_twist_rust" exec="joy_twist_rust">
         <remap from="/cmd_vel" to="/turtle1/cmd_vel"/>
 
@@ -12,4 +14,10 @@
     </node>
 
     <include file="$(find-pkg-share haya_imu_ros2)/launch/test.launch.xml"/>
+    <node pkg="imu_localizer" exec="imu_localizer">
+    	<remap from="/odom" to="/imu/odom"/>
+    	
+    	<param from="delta_milli" value="10" />
+    	<param from="odom_frame_id" value="odom"/>
+    </node>
 </launch>
