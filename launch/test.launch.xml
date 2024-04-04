@@ -1,0 +1,24 @@
+<launch>
+    
+    <node pkg="turtle_odometer" exec="my_node">
+        <remap from="/pose" to="/turtle1/pose"/>
+        <remap from="/odom" to="/turtle1/odom"/>
+    </node>
+
+    <node pkg="turtlesim" exec="turtlesim_node"></node>
+
+    <node pkg="joy_twist_rust" exec="joy_twist_rust">
+        <remap from="/cmd_vel" to="/turtle1/cmd_vel"/>
+
+        <param name="mode" value="ble" />
+        <param name="enable_debug" value="false"/>
+    </node>
+
+    <node pkg="zikoichi_controller" exec="auto">
+        <remap from="/turtle1/odom" to="/turtle1/odom"/>
+        <remap from="/imu/odom" to="/imu/odom"/>
+    </node>
+
+    <include file="$(find-pkg-share haya_imu_ros2)/launch/test.launch.xml"/>
+    
+</launch>
